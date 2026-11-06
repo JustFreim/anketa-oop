@@ -114,15 +114,32 @@ class Teacher(Person):
         return self.department
 
 
+def parse_line(line):
+    """Разбирает строку файла: возвращает Student или Teacher.
+
+    Единственное место, где выбор класса зависит от типа анкеты.
+    """
+    fields = line.split(";")
+    if len(fields) != 5:
+        raise AnketaError(f"полей {len(fields)} вместо 5")
+    kind = fields[0].strip().lower()
+    if kind == "s":
+        return Student(*fields[1:])
+    if kind == "t":
+        return Teacher(*fields[1:])
+    raise AnketaError("неизвестный тип: " + fields[0].strip())
+
+
 if __name__ == "__main__":
     # проверка модуля при прямом запуске: python people.py
-    s = Student("иванов иван петрович", "IvAnov@Mail.Ru",
-                "89211112233", "09 С33")
-    t = Teacher("петров пётр сергеевич", "petrov@voenmeh.ru",
-                "89217654321", "Кафедра И9")
-    for p in (s, t):
-        print(p, p.extra(), p.masked_phone())
-    try:
-        Student("сидоров иван", "sidorov@mail.ru", "89211112233", "")
-    except AnketaError as e:
-        print("не принято:", e)
+    lines = [
+        "s;иванов иван;ivanov@mail.ru;89211112233;09с33",
+        "t;петров пётр;petrov@voenmeh.ru;89217654321;Кафедра И9",
+        "x;неизвестный тип;a@b.ru;89211112233;что-то",
+    ]
+    for line in lines:
+        try:
+            p = parse_line(line)
+            print(p, "|", p.extra())
+        except AnketaError as e:
+            print("не принято:", e)
