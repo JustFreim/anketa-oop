@@ -80,3 +80,11 @@ def test_save_errors_pishet_prichinu(zhurnal, tmp_path):
     tekst = put.read_text(encoding="utf-8")
     assert "строка 2: в ФИО меньше двух слов" in tekst
     assert "строка 7: неизвестный тип: x" in tekst
+
+
+def test_sortirovka_yo():
+    r = Registry()
+    for fio in ("яковлев яков", "ёлкин егор", "абрамов абрам"):
+        r.add(Student(fio, "a@mail.ru", "89211112233", "09с33"))
+    familii = [p.fio.split()[0] for p in r.sorted_people()]
+    assert familii == ["Абрамов", "Ёлкин", "Яковлев"]

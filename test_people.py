@@ -136,3 +136,15 @@ def test_parse_line_teacher():
 def test_parse_line_otklonyaet_plohuyu_stroku(stroka):
     with pytest.raises(AnketaError):
         parse_line(stroka)
+
+
+# ---------- ошибки, найденные тестами ----------
+
+def test_check_fio_dvoynaya_familiya():
+    assert (Person.check_fio("петров-водкин кузьма")
+            == "Петров-Водкин Кузьма")
+
+
+def test_check_mail_probel_vnutri_oshibka():
+    with pytest.raises(AnketaError):
+        Person.check_mail("iv anov@mail.ru")
