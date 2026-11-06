@@ -11,6 +11,14 @@ W_ROLE = 15
 W_EXTRA = 16
 
 
+def ask_input_file():
+    """Спрашивает имя входного файла. Пустой ввод - файл по умолчанию."""
+    name = input(f"Имя входного файла [{INPUT_FILE}]: ").strip()
+    if name == "":
+        return INPUT_FILE
+    return name
+
+
 def fit(text, width):
     if len(text) > width:
         return text[:width - 1] + "~"
@@ -51,8 +59,9 @@ def print_stat(registry):
 
 def main():
     registry = Registry()
-    if not registry.load(INPUT_FILE):
-        print("Файл", INPUT_FILE, "не найден. Положите его в папку data/")
+    filename = ask_input_file()
+    if not registry.load(filename):
+        print("Файл", filename, "не найден")
         return
     print_table(registry)
     print()
