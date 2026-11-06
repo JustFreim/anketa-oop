@@ -64,6 +64,9 @@ class Registry:
     def __len__(self):
         return len(self.people)
 
+    def __iter__(self):
+        return iter(self.people)
+
 
 if __name__ == "__main__":
     # проверка модуля при прямом запуске: python registry.py
