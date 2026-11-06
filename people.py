@@ -75,8 +75,13 @@ class Person:
     def __str__(self):
         return f"{self.fio} ({self.role()})"
 
+    @staticmethod
+    def sort_key(fio):
+        """Ключ сортировки: без учёта регистра, буква ё как е."""
+        return fio.lower().replace("ё", "е")
+
     def __lt__(self, other):
-        return self.fio < other.fio
+        return self.sort_key(self.fio) < self.sort_key(other.fio)
 
 
 class Student(Person):
