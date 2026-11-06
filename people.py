@@ -21,7 +21,7 @@ class Person:
         """Возвращает почту в нижнем регистре или бросает AnketaError."""
         mail = raw.strip().lower()
         bad = "почта неверная: " + raw.strip()
-        if mail.count("@") != 1:
+        if mail.count("@") != 1 or " " in mail:
             raise AnketaError(bad)
         name, domain = mail.split("@")
         if name == "" or "." not in domain:
