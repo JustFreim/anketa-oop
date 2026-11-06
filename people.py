@@ -79,11 +79,50 @@ class Person:
         return self.fio < other.fio
 
 
+class Student(Person):
+    """Студент: общая часть от Person и группа."""
+
+    def __init__(self, fio, mail, phone, group):
+        super().__init__(fio, mail, phone)
+        self.group = "".join(group.split()).lower()
+        if self.group == "":
+            raise AnketaError("группа не указана")
+
+    def role(self):
+        return "студент"
+
+    def extra(self):
+        return self.group
+
+    def group_name(self):
+        return self.group
+
+
+class Teacher(Person):
+    """Преподаватель: общая часть от Person и кафедра."""
+
+    def __init__(self, fio, mail, phone, department):
+        super().__init__(fio, mail, phone)
+        self.department = " ".join(department.split())
+        if self.department == "":
+            raise AnketaError("кафедра не указана")
+
+    def role(self):
+        return "преподаватель"
+
+    def extra(self):
+        return self.department
+
+
 if __name__ == "__main__":
     # проверка модуля при прямом запуске: python people.py
-    p = Person("иванов иван петрович", "IvAnov@Mail.Ru", "89211112233")
-    print(p, p.masked_phone(), p.short_fio())
+    s = Student("иванов иван петрович", "IvAnov@Mail.Ru",
+                "89211112233", "09 С33")
+    t = Teacher("петров пётр сергеевич", "petrov@voenmeh.ru",
+                "89217654321", "Кафедра И9")
+    for p in (s, t):
+        print(p, p.extra(), p.masked_phone())
     try:
-        Person("сидоров", "sidorov@mail.ru", "89211112233")
+        Student("сидоров иван", "sidorov@mail.ru", "89211112233", "")
     except AnketaError as e:
         print("не принято:", e)
