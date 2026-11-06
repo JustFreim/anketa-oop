@@ -31,7 +31,9 @@ people.py        AnketaError, Person, Student, Teacher, parse_line
 registry.py      Registry: журнал, чтение файла, статистика, сохранение
 main.py          запуск и вывод таблицы
 data/anketa.txt  пример входных данных
-tests/           автотесты (pytest)
+test_people.py   тесты к people.py
+test_registry.py тесты к registry.py
+razminka/        учебные модули calc.py, wordcount.py и тесты к ним
 ```
 
 ## Как устроены классы
@@ -45,3 +47,14 @@ tests/           автотесты (pytest)
 
 Принятые анкеты сохраняются в `ok.txt`, бракованные с причинами - в
 `errors.txt`. Оба файла создаются заново при каждом запуске.
+
+## Тесты
+
+```
+pip install pytest
+python -m pytest -q
+```
+
+Запускать из корня проекта и именно так (`python -m pytest`, а не просто
+`pytest`), иначе тесты не найдут модули проекта. После каждого push
+тесты запускает пайплайн (вкладка Actions на GitHub).
