@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block zagolovok %}Статистика{% endblock %}
+
+{% block soderzhimoe %}
+  <h1>Статистика</h1>
+  <p class="itog">Принято: {{ prinyato }} | Отклонено: {{ otkloneno }}</p>
+  <p>Всего строк в файле: {{ vsego }} (пустых пропущено: {{ pustyh }})</p>
+
+  <div class="kolonki">
+    <section>
+      <h2>По ролям</h2>
+      <ul>
+        {% for rol, n in po_rolyam %}
+          <li>{{ rol }}: {{ n }}</li>
+        {% else %}
+          <li>принятых анкет нет</li>
+        {% endfor %}
+      </ul>
+    </section>
+    <section>
+      <h2>По группам</h2>
+      <ul>
+        {% for gruppa, n in po_gruppam %}
+          <li><a href="{{ url_for('gruppa_stranitsa', nazvanie=gruppa) }}">{{ gruppa }}</a>: {{ n }}</li>
+        {% else %}
+          <li>групп нет</li>
+        {% endfor %}
+      </ul>
+    </section>
+  </div>
+
+  <h2>Отклонённые строки</h2>
+  {% if brak %}
+    <table>
+      <tr><th>Строка</th><th>Текст</th><th>Причина</th></tr>
+      {% for num, tekst, prichina in brak %}
+        <tr>
+          <td>{{ num }}</td>
+          <td>{{ tekst }}</td>
+          <td>{{ prichina }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+  {% else %}
+    <p class="pusto">Отклонённых строк нет.</p>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block zagolovok %}{% if gruppa %}Группа {{ gruppa }}{% else %}Принятые анкеты{% endif %}{% endblock %}
+
+{% block soderzhimoe %}
+  {% if gruppa %}
+    <h1>Группа {{ gruppa }}</h1>
+    <p><a href="{{ url_for('index') }}">Все анкеты</a></p>
+  {% else %}
+    <h1>Принятые анкеты</h1>
+    <p class="itog">Принято: {{ prinyato }} | Отклонено: {{ otkloneno }}</p>
+  {% endif %}
+
+  {% if anketi %}
+    <table>
+      <tr>
+        <th>№</th><th>ФИО</th><th>Роль</th><th>Группа / кафедра</th><th>Телефон</th>
+      </tr>
+      {% for a in anketi %}
+        <tr>
+          <td>{{ a.nomer }}</td>
+          <td><a href="{{ url_for('odna_anketa', nomer=a.nomer) }}">{{ a.fio }}</a></td>
+          <td>{{ a.rol }}</td>
+          <td>
+            {% if a.gruppa %}
+              <a href="{{ url_for('gruppa_stranitsa', nazvanie=a.gruppa) }}">{{ a.extra }}</a>
+            {% else %}
+              {{ a.extra }}
+            {% endif %}
+          </td>
+          <td>{{ a.maska }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+  {% else %}
+    <p class="pusto">
+      {% if gruppa %}В группе {{ gruppa }} принятых анкет нет.{% else %}Принятых анкет пока нет.{% endif %}
+    </p>
+  {% endif %}
+{% endblock %}

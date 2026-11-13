@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block zagolovok %}Анкеты{% endblock %} Обработчик анкет</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header>
+    <div class="shapka">
+      <span class="logo">Обработчик анкет</span>
+      <nav>
+        <a href="{{ url_for('index') }}"
+           {% if request.endpoint == 'index' %}class="aktivno"{% endif %}>Анкеты</a>
+        <a href="{{ url_for('statistika') }}"
+           {% if request.endpoint == 'statistika' %}class="aktivno"{% endif %}>Статистика</a>
+        <a href="{{ url_for('forma_dobavleniya') }}"
+           {% if request.endpoint == 'forma_dobavleniya' %}class="aktivno"{% endif %}>Добавить анкету</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    {% block soderzhimoe %}{% endblock %}
+  </main>
+
+  <footer>
+    Данные в JSON:
+    <a href="{{ url_for('api_spisok') }}">анкеты</a>,
+    <a href="{{ url_for('api_statistika') }}">статистика</a>,
+    <a href="{{ url_for('api_brak') }}">брак</a>
+  </footer>
+</body>
+</html>

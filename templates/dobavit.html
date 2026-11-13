@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block zagolovok %}Добавить анкету{% endblock %}
+
+{% block soderzhimoe %}
+  <h1>Добавить анкету</h1>
+
+  {% if oshibka %}
+    <p class="oshibka">Анкета не принята: {{ oshibka }}</p>
+  {% endif %}
+
+  <form class="anketa" method="post" action="{{ url_for('forma_dobavleniya') }}">
+    <label for="tip">Тип анкеты</label>
+    <select id="tip" name="tip">
+      <option value="s" {% if bylo.tip == 's' %}selected{% endif %}>студент</option>
+      <option value="t" {% if bylo.tip == 't' %}selected{% endif %}>преподаватель</option>
+    </select>
+
+    <label for="fio">ФИО</label>
+    <input id="fio" name="fio" value="{{ bylo.fio }}">
+
+    <label for="mail">Почта</label>
+    <input id="mail" name="mail" value="{{ bylo.mail }}">
+
+    <label for="phone">Телефон</label>
+    <input id="phone" name="phone" value="{{ bylo.phone }}">
+
+    <label for="dopolnenie">Группа (у студента) или кафедра (у преподавателя)</label>
+    <input id="dopolnenie" name="dopolnenie" value="{{ bylo.dopolnenie }}">
+
+    <button type="submit">Добавить</button>
+  </form>
+  <p class="podskazka">Данные проверяются теми же классами, что и при чтении файла.</p>
+{% endblock %}

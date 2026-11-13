@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block zagolovok %}{{ a.fio }}{% endblock %}
+
+{% block soderzhimoe %}
+  <h1>{{ a.fio }}</h1>
+  <dl class="polya">
+    <dt>Номер анкеты</dt><dd>{{ a.nomer }}</dd>
+    <dt>Роль</dt><dd>{{ a.rol }}</dd>
+    <dt>Почта</dt><dd>{{ a.mail }}</dd>
+    <dt>Телефон</dt><dd>{{ a.phone }}</dd>
+    {% if a.gruppa %}
+      <dt>Группа</dt>
+      <dd><a href="{{ url_for('gruppa_stranitsa', nazvanie=a.gruppa) }}">{{ a.gruppa }}</a></dd>
+    {% else %}
+      <dt>Кафедра</dt><dd>{{ a.extra }}</dd>
+    {% endif %}
+  </dl>
+  <p>
+    <a href="{{ url_for('index') }}">Все анкеты</a>
+    <a href="{{ url_for('api_odna', nomer=a.nomer) }}">эта анкета в JSON</a>
+  </p>
+{% endblock %}
